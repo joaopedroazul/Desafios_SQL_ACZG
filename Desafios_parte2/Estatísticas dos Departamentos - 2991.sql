@@ -1,10 +1,11 @@
 select tab.* from 
-(Select Dep.nome as departamento,div.nome as divisao,round((sum(pagamentos.salario)/count(pagamentos.lotacao_div)),2) as media,MAX(pagamentos.salario) as maior
+(Select Dep.nome as "Nome Departamento",count(pagamentos.matr) as "Numero de Empregados",round((sum(pagamentos.salario)/count(pagamentos.lotacao_div)),2) as "Media Salarial",MAX(pagamentos.salario) as "Maior Salario"
+,MIN(pagamentos.salario) as "Menor Salario"
 from departamento as dep
 left join divisao as div
 on div.cod_dep = dep.cod_dep
 left join(
-Select emp.matr, emp.lotacao,emp.lotacao_div,COALESCE((sum(valores.salario)-COALESCE(sum(descontos.desconto),0.00)),0.00) as salario
+Select emp.matr, emp.lotacao,emp.lotacao_div,COALESCE((sum(valores.salario)-COALESCE(sum(descontos.desconto),0)),0) as salario
 from empregado as emp
 left join(
 select e.matr,sum(v.valor) as salario
@@ -27,5 +28,5 @@ order by salario desc
 )
 as pagamentos
 on dep.cod_dep = pagamentos.lotacao and div.cod_divisao = pagamentos.lotacao_div
-group  by Dep.nome,div.nome) as tab
-order by media  desc
+group  by Dep.nome) as tab
+order by "Media Salarial"  desc
