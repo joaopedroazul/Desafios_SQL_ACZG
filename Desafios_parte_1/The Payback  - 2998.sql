@@ -14,8 +14,7 @@ from
 	group by c.id) as tab
 left join clients as c
 on c.id = tab.id
-where (tab.lucro - c.investment) > 0
- 
+where (tab.lucro - c.investment) > 0 
 union
 Select tab.id, tab.lucro as lucro,tab.ultimo_mes as ultimo_mes from
 (select c.id as id, sum(o.profit ) as lucro,max(o.month) as ultimo_mes 
