@@ -25,7 +25,7 @@ on descontos.matr = emp.matr
 group by emp.matr, emp.lotacao,emp.lotacao_div
 order by salario desc
 )
- as pagamentos
+as pagamentos
 on dep.cod_dep = pagamentos.lotacao and div.cod_divisao = pagamentos.lotacao_div
 group  by Dep.nome,div.nome) as tab
 order by media  desc
